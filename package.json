@@ -1,0 +1,28 @@
+{
+  "name": "code-search",
+  "version": "0.0.1",
+  "description": "A desktop app to search source code for symbols and references",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyberpirate/Code-Search.git"
+  },
+  "author": "",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/cyberpirate/Code-Search/issues"
+  },
+  "homepage": "https://github.com/cyberpirate/Code-Search#readme",
+  "devDependencies": {
+    "electron": "^2.0.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
+  }
+}
