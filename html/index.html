@@ -2,6 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../css/main.css">
 </head>
 <body class="bg-dark text-white">
 
@@ -13,11 +14,18 @@
 	</div>
 
 	<div> <!-- load scripts -->
-		<script src="../node_modules/jquery/dist/jquery.js"></script>
-		<script src="../node_modules/popper.js/dist/umd/popper.js"></script>
+		<script>window.$ = window.jQuery = require('jquery');</script>
+		<script>window.Popper = require('popper.js');</script>
 		<script>window.bootstrap = require('bootstrap');</script>
 
-		<script src="../src/Settings.js"></script>
+		<!-- load app modules -->
+		<script src="../src/module/Utils.js"></script>
+		<script src="../src/module/Settings.js"></script>
+
+		<!-- load view models-->
+		<script src="../src/view_model/SourcesPanel.js"></script>
+
+		<!-- load models -->
 		<!-- <script src="../src/SourcesPanel.js"></script> -->
 	</div>
 </body>
