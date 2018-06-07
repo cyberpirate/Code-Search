@@ -19,8 +19,8 @@
 	}
 
 	window.getSettings = async function() {
-		var file = await readFile(settingsFile, "utf8");
-		return JSON.parse(file);
+		var file = await readFile(settingsFile, "utf8").catch((err) => {} );
+		return JSON.parse(file || "{}");
 	}
 
 	window.writeSettings = async function(settingsObject) {
