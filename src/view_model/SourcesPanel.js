@@ -42,10 +42,10 @@
 
 		createOrDestroy(
 			window.SourcesPanelViewModel["loading"],
-			$(view).children(".loader"),
+			$(view).children("#loader"),
 			function() {
-				return $("<div/>", {
-					class: "loader"
+				return $("<i class='fas fa-spinner fa-spin'></i>", {
+					id: "loader"
 				}).appendTo(view);
 			}
 		);
@@ -80,9 +80,9 @@
 					};
 				})());
 
-				var nameElm = createOrDestroy(true, $(itemElm).children("h3"), 
+				var nameElm = createOrDestroy(true, $(itemElm).children("h5"), 
 					function() {
-						return $("<h3/>").appendTo(itemElm);
+						return $("<h5/>").appendTo(itemElm);
 					}
 				);
 
@@ -98,6 +98,16 @@
 				.eq(window.SourcesPanelViewModel.selection).removeClass("bg-secondary");
 			$(listElm).children(".ItemListChild")
 				.eq(window.SourcesPanelViewModel.selection).addClass("bg-primary");
+
+			var addButton = createOrDestroy(true, $(listElm).children("#AddItem"),
+				function() {
+					return $(`
+						<button type='button' class='btn btn-success btn-md'>
+							<i class='fas fa-plus'></i>
+						</button>
+					`).appendTo(listElm);
+				}
+			);
 		}
 	};
 

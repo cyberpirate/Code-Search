@@ -1,0 +1,3 @@
+[submodule "third_party/fontawesome"]
+	path = third_party/fontawesome
+	url = git@github.com:FortAwesome/Font-Awesome.git
