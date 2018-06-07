@@ -44,9 +44,11 @@
 			window.SourcesPanelViewModel["loading"],
 			$(view).children("#loader"),
 			function() {
-				return $("<i class='fas fa-spinner fa-spin'></i>", {
-					id: "loader"
-				}).appendTo(view);
+				return $(`
+					<div id='loader'>
+						<i class='fas fa-spinner fa-spin'></i>\
+					</div>
+					`).appendTo(view);
 			}
 		);
 
