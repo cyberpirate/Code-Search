@@ -104,9 +104,9 @@
 			var addButton = createOrDestroy(true, $(listElm).children("#AddItem"),
 				function() {
 					return $(`
-						<button type='button' class='btn btn-success btn-md'>
+						<div class='text-center'><button type='button' class='btn btn-success btn-md mt-1'>
 							<i class='fas fa-plus'></i>
-						</button>
+						</button></div>
 					`).appendTo(listElm);
 				}
 			);
