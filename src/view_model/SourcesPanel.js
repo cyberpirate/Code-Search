@@ -105,11 +105,20 @@
 				function() {
 					return $(`
 						<div class='text-center'><button type='button' class='btn btn-success btn-md mt-1'>
+							<input id="sourcePath" type="file" style="display: none" webkitdirectory />
 							<i class='fas fa-plus'></i>
 						</button></div>
 					`).appendTo(listElm);
 				}
 			);
+
+			addButton.click(_ => {
+				document.getElementById('sourcePath').click();
+			});
+
+			$(addButton).find("input").change(function(e) {
+				window.SourcesPanelAddSource(e.target.files[0]);
+			});
 		}
 	};
 

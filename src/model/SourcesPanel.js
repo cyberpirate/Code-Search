@@ -8,6 +8,10 @@
 		});
 	}
 
+	window.SourcesPanelAddSource = function(source) {
+		console.log(source);
+	};
+
 	window.SourcesPanelApply({
 		loading: false,
 		list: [
