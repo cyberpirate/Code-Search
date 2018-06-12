@@ -13,7 +13,7 @@ const {app, BrowserWindow} = require('electron')
 	
 		// Open the DevTools.
 		win.webContents.openDevTools()
-	
+
 		// Emitted when the window is closed.
 		win.on('closed', () => {
 			// Dereference the window object, usually you would store windows
@@ -21,6 +21,21 @@ const {app, BrowserWindow} = require('electron')
 			// when you should delete the corresponding element.
 			win = null
 		})
+
+		const SyncedData = require("./module/SyncedData.js");
+	
+		(function() {
+			var sData = SyncedData.GetSyncedData("SourcesPanel", win.webContents);
+			var i = 0;
+	
+			setInterval(function() {
+				i++;
+				let key = "index" + i;
+				let newData = {};
+				newData[key] = i;
+				sData.apply(newData);
+			}, 500);
+		})();
 	}
 	
 	// This method will be called when Electron has finished

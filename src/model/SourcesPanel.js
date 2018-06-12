@@ -22,4 +22,12 @@
 		],
 		selection: 1
 	});
+
+
+	var sData = window.GetSyncedData("SourcesPanel");
+	sData.setListener((newData, data, name) => {
+		console.log(name);
+		console.log(data);
+		console.log(newData);
+	});
 })();
