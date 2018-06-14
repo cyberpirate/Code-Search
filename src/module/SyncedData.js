@@ -19,6 +19,12 @@
 
 	(ipcRenderer || ipcMain).on("SyncedData", (event, args) => {
 		if(!(args.name in data)) data[args.name] = {};
+
+		if("init" in args && args.init) {
+			updateSync(args.name, false, data[args.name]);
+			return;
+		}
+
 		if(args.apply) {
 			patchObject(data[args.name], args.data)
 		} else {
@@ -38,9 +44,17 @@
 		});
 	}
 
+
+
 	function GetSyncedData(dataName, msgSender) {
 		sender = msgSender;
 		if(!(dataName in data)) data[dataName] = {};
+
+		(ipcRenderer || sender).send("SyncedData", {
+			"name": dataName,
+			"init": true
+		});
+
 		return {
 			get: _ => { return data[dataName]; },
 			set: (newData) => { data[dataName] = newData; updateSync(dataName, false, newData); },
