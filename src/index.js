@@ -4,6 +4,8 @@ const {app, BrowserWindow} = require('electron')
 	// be closed automatically when the JavaScript object is garbage collected.
 	let win
 	
+	const SourcesPanel = require("./model/SourcesPanel.js");
+
 	function createWindow () {
 		// Create the browser window.
 		win = new BrowserWindow({width: 1600, height: 1000})
@@ -11,6 +13,7 @@ const {app, BrowserWindow} = require('electron')
 		// and load the index.html of the app.
 		win.loadFile('html/index.html')
 	
+		SourcesPanel.init(win.webContents);
 		// Open the DevTools.
 		win.webContents.openDevTools()
 
@@ -21,21 +24,6 @@ const {app, BrowserWindow} = require('electron')
 			// when you should delete the corresponding element.
 			win = null
 		})
-
-		const SyncedData = require("./module/SyncedData.js");
-	
-		(function() {
-			var sData = SyncedData.GetSyncedData("SourcesPanel", win.webContents);
-			var i = 0;
-	
-			setInterval(function() {
-				i++;
-				let key = "index" + i;
-				let newData = {};
-				newData[key] = i;
-				sData.apply(newData);
-			}, 500);
-		})();
 	}
 	
 	// This method will be called when Electron has finished

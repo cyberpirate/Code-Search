@@ -1,33 +1,30 @@
-(async function() {
 
-	var settings = await window.getSettings();
+const {ipcMain} = require('electron');
+const settings = require("../module/Settings.js");
+const SyncedData = require("../module/SyncedData.js");
 
-	window.SourcesPanelSetSelection = function(index) {
-		window.SourcesPanelApply({
-			selection: index
-		});
-	}
 
-	window.SourcesPanelAddSource = function(source) {
-		console.log(source);
+exports.init = function(webContents) {
+	settings.init();
+	
+	var sourcesPanelSync = SyncedData.GetSyncedData("SourcesPanel", webContents)
+	
+	var functions = {
+		"addSource": (args) => {
+			
+		},
+		"setSelection": (args) => {
+			sourcesPanelSync.apply({
+				selection: args.index
+			});
+		}
 	};
-
-	window.SourcesPanelApply({
-		loading: false,
-		list: [
-			{ name: "item 1" },
-			{ name: "item 2" },
-			{ name: "item 3" },
-			{ name: "item 4" },
-		],
-		selection: 1
+	
+	ipcMain.on("SourcesPanel", (event, args) => {
+		functions[args.name](args.args);
 	});
 
-
-	var sData = window.GetSyncedData("SourcesPanel");
-	sData.setListener((newData, data, name) => {
-		console.log(name);
-		console.log(data);
-		console.log(newData);
+	sourcesPanelSync.apply({
+		loading: false
 	});
-})();
+};

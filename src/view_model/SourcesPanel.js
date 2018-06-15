@@ -1,7 +1,7 @@
 (function() {
 
 	var view = $("#sourcesPanel");
-
+	var sData = window.GetSyncedData("SourcesPanel");
 
 	/*
 
@@ -36,12 +36,12 @@
 		return elm;
 	}
 
-	window.SourcesPanelViewModel = {};
-	window.SourcesPanelApply = function(viewModelDiff) {
-		patchObject(window.SourcesPanelViewModel, viewModelDiff);
+	var viewModel = {};
+	function apply(viewModelDiff) {
+		patchObject(viewModel, viewModelDiff);
 
 		createOrDestroy(
-			window.SourcesPanelViewModel["loading"],
+			viewModel["loading"],
 			$(view).children("#loader"),
 			function() {
 				return $(`
@@ -53,7 +53,7 @@
 		);
 
 		var listElm = createOrDestroy(
-			!window.SourcesPanelViewModel["loading"],
+			!viewModel["loading"],
 			$(view).children(".ItemList"),
 			function() {
 				return $("<div/>", {
@@ -62,9 +62,9 @@
 			}
 		);
 
-		if(!window.SourcesPanelViewModel["loading"]) {
-			for(var i = 0; i < window.SourcesPanelViewModel["list"].length; i++) {
-				var itemData = window.SourcesPanelViewModel["list"][i];
+		if(!viewModel["loading"]) {
+			for(var i = 0; i < viewModel["list"].length; i++) {
+				var itemData = viewModel["list"][i];
 
 				var itemElm = createOrDestroy(true, $(listElm).children(".ItemListChild").eq(i),
 					function() {
@@ -97,9 +97,9 @@
 				.addClass("bg-secondary");
 
 			$(listElm).children(".ItemListChild")
-				.eq(window.SourcesPanelViewModel.selection).removeClass("bg-secondary");
+				.eq(viewModel.selection).removeClass("bg-secondary");
 			$(listElm).children(".ItemListChild")
-				.eq(window.SourcesPanelViewModel.selection).addClass("bg-primary");
+				.eq(viewModel.selection).addClass("bg-primary");
 
 			var addButton = createOrDestroy(true, $(listElm).children("#AddItem"),
 				function() {
@@ -122,5 +122,9 @@
 		}
 	};
 
-	window.SourcesPanelApply(defaultVars);
+	apply(defaultVars);
+
+	sData.setListener((newData, data, name) => {
+		apply(data);
+	});
 })();

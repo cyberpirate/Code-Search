@@ -17,14 +17,15 @@
     "url": "https://github.com/cyberpirate/Code-Search/issues"
   },
   "homepage": "https://github.com/cyberpirate/Code-Search#readme",
-  "devDependencies": {
-    "electron": "^2.0.2"
-  },
   "dependencies": {
+    "electron": "^2.0.2",
     "bootstrap": "^4.1.1",
     "is-electron-renderer": "^2.0.1",
     "jquery": "^3.3.1",
+    "md5": "^2.2.1",
     "nearley": "^2.13.0",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "sqlite3": "^4.0.0",
+    "squel": "^5.12.1"
   }
 }
