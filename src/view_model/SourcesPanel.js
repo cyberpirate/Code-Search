@@ -24,6 +24,8 @@
 		selection: 0
 	};
 
+	var fRunner = window.getFunctionRunner("SourcesPanel");
+
 	function createOrDestroy(shouldExist, elm, create) {
 		if(shouldExist && elm.length == 0) {
 			return create();
@@ -62,25 +64,52 @@
 			}
 		);
 
+		var addButton = createOrDestroy(true, $(listElm).children("#AddItem"),
+			function() {
+				var btn = $(`
+					<div class='text-center' id='AddItem'><button type='button' class='btn btn-success btn-md mt-1'>
+						<input id="sourcePath" type="file" style="display: none" webkitdirectory />
+						<i class='fas fa-plus'></i>
+					</button></div>
+				`).appendTo(listElm);
+				
+				btn.click((event) => {
+					if(!$(event.target).is("input")) {
+						document.getElementById('sourcePath').click();
+					}
+				});
+		
+				$(btn).find("input").change(function(e) {
+					fRunner("addSource", {
+						"source": e.target.files[0].path
+					});
+				});
+
+				return btn;
+			}
+		);
+
 		if(!viewModel["loading"]) {
 			for(var i = 0; i < viewModel["list"].length; i++) {
 				var itemData = viewModel["list"][i];
 
 				var itemElm = createOrDestroy(true, $(listElm).children(".ItemListChild").eq(i),
 					function() {
-						return $("<div/>", {
+						var ret = $("<div/>", {
 							class: "ItemListChild p-3"
-						}).appendTo(listElm);
+						}).insertBefore(addButton);
+
+						ret.click((event) => {
+							var elm = event.currentTarget;
+							const index = Array.from(elm.parentNode.children).indexOf(elm);
+							fRunner("setSelection", {
+								"index": index
+							});
+						});
+
+						return ret;
 					}
 				);
-
-				itemElm.click((function() {
-					const index = i;
-					return function() {
-						console.log("")
-						window.SourcesPanelSetSelection(index);
-					};
-				})());
 
 				var nameElm = createOrDestroy(true, $(itemElm).children("h5"), 
 					function() {
@@ -100,25 +129,6 @@
 				.eq(viewModel.selection).removeClass("bg-secondary");
 			$(listElm).children(".ItemListChild")
 				.eq(viewModel.selection).addClass("bg-primary");
-
-			var addButton = createOrDestroy(true, $(listElm).children("#AddItem"),
-				function() {
-					return $(`
-						<div class='text-center'><button type='button' class='btn btn-success btn-md mt-1'>
-							<input id="sourcePath" type="file" style="display: none" webkitdirectory />
-							<i class='fas fa-plus'></i>
-						</button></div>
-					`).appendTo(listElm);
-				}
-			);
-
-			addButton.click(_ => {
-				document.getElementById('sourcePath').click();
-			});
-
-			$(addButton).find("input").change(function(e) {
-				window.SourcesPanelAddSource(e.target.files[0]);
-			});
 		}
 	};
 
