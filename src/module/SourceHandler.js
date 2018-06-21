@@ -1,18 +1,21 @@
-var sqlite3 = require('sqlite3');
+var Db = require('tingodb')().Db;
+const settings = require("../module/Settings.js");
+const path = require('path');
 var md5 = require('md5');
 var squel = require("squel");
 
+settings.init();
 
 module.exports = class SourceHandler {
 	constructor(path) {
 		this.path = path;
 		this.searchId = 0;
-		this.db = new sqlite3.Database(":memory:");
+		this.db = new Db(path.join(settings.getDir(), md5(this.path)), {});
 
-		this.db.serialize(function() {
-
-		});
+		this.symbolColl = this.db.collection("symbol_collection");
 	}
 
-
+	setProgressListener(listener) {
+		this.progListener = listener;
+	}
 }
