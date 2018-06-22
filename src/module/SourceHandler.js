@@ -2,7 +2,6 @@ var Db = require('tingodb')().Db;
 const settings = require("../module/Settings.js");
 const path = require('path');
 var md5 = require('md5');
-var squel = require("squel");
 
 settings.init();
 
