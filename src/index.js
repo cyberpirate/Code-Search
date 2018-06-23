@@ -1,4 +1,11 @@
 const {app, BrowserWindow} = require('electron')
+const process = require('process');
+
+	process.on('unhandledRejection', (err, p) => {
+		console.log('Unhandled Rejection at: Promise', p, 'reason:', err);
+		console.log(err.stack);
+		// application specific logging, throwing an error, or other logic here
+	});
 	
 	// Keep a global reference of the window object, if you don't, the window will
 	// be closed automatically when the JavaScript object is garbage collected.
